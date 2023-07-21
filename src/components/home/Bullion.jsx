@@ -1,10 +1,11 @@
 import React from 'react'
+import MainPage from './MainPage'
 
 const Bullion = () => {
   return (
-    <div>
-      bullion
-    </div>
+    <>
+      <MainPage/>
+    </>
   )
 }
 
