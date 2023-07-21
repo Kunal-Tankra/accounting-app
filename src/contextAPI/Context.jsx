@@ -10,7 +10,6 @@ const Context = ({children }) => {
     return (
         <AllContexts.Provider value={contextsObj}>
             {children}
-            
         </AllContexts.Provider>
     )
 }

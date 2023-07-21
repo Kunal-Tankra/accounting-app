@@ -1,15 +1,14 @@
-import { useContext } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import AllContexts from './contextAPI/Context';
+import Home from './components/home/Home';
 
 function App() {
-  const {name} = useContext(AllContexts)
   return (
-   <>
-   <h1>
-{name}
-   </h1>
-   </>
+    <>
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>
+    </>
   );
 }
 
