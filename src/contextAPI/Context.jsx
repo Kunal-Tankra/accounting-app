@@ -8,10 +8,14 @@ const Context = ({children }) => {
     // users data
     const [usersData, setUsersData] = useState([]);
 
+    // curr edit user
+    const [currEditUser, setCurrEditUser] = useState(null);
+
     // value obj
     const contextsObj = {
         displayForm, setdisplayForm,
-        usersData, setUsersData
+        usersData, setUsersData,
+        currEditUser, setCurrEditUser
     }
 
     return (

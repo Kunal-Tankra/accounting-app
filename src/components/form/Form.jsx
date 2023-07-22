@@ -1,10 +1,10 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import "./Form.css"
 import AllContexts from '../../contextAPI/Context'
 
 const Form = () => {
     // context
-    const { displayForm, setdisplayForm , usersData, setUsersData} = useContext(AllContexts)
+    const { displayForm, setdisplayForm , usersData, setUsersData, currEditUser, setCurrEditUser} = useContext(AllContexts)
 
     // state for selected value
     const [selectedTag, setSelectedTag] = useState(null);
@@ -27,10 +27,12 @@ const Form = () => {
         const form = formRef.current
         const name = form.name.value
         const party = form.party.value
+        const ph = form.ph.value
 
 
         const userObj = {
             id,
+            ph,
             name,
             party
         }
@@ -38,24 +40,77 @@ const Form = () => {
         // reset the form
         form.name.value = ""
         form.party.value = "-"
-
+        form.ph.value = ""
+        
         setdisplayForm(false)
         setId(id+1)
-
+        
         // set the user data in all users data array
         setUsersData([...usersData, userObj])
         
     }
 
-    console.log("all users", usersData)
-
+    
     // handle close the form
     const handleCloseForm = () => {
         const form = formRef.current
         form.name.value = ""
         form.party.value = "-"
+        form.ph.value = ""
         setdisplayForm(false)
+
+        // set again null
+        setCurrEditUser(null)
     }
+    
+    useEffect(() => {
+        // if edit user is here then prefill the form
+        if(currEditUser){
+            const form = formRef.current
+            form.name.value = currEditUser.name
+            form.party.value = currEditUser.party
+            form.ph.value = currEditUser.ph
+
+            
+
+        }
+
+
+    }, [currEditUser]);
+
+    // handle update
+    const handleUpdateUser = (e)=>{
+        e.preventDefault()
+        const form = formRef.current
+        const name = form.name.value
+        const party = form.party.value
+        const ph = form.ph.value
+
+        setUsersData(usersData.map(user=>{
+            if(user.id === currEditUser.id){
+                return {
+                    id: currEditUser.id,
+                    name,
+                    party,
+                    ph
+                }
+            }
+            else{
+                return user
+            }
+        }))
+
+         // reset the form
+         form.name.value = ""
+         form.party.value = "-"
+         form.ph.value = ""
+         
+         setdisplayForm(false)
+
+         // set again null
+         setCurrEditUser(null)
+    }
+
 
     return (
         <div style={{ display: displayForm ? "flex" : "none" }} className='formBg'>
@@ -81,7 +136,7 @@ const Form = () => {
                 </div>
 
                 {/* actual form */}
-                <form onSubmit={handleSubmitForm} ref={formRef} className="formcontainer">
+                <form onSubmit={currEditUser? handleUpdateUser: handleSubmitForm} ref={formRef} className="formcontainer">
                     <section>
                         <div>
 
@@ -116,7 +171,7 @@ const Form = () => {
                         <div>
 
                             <label htmlFor="ph">Phone Number</label>
-                            <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" max={"10"} id='ph' name='phNo.' placeholder='Enter 10 digit number' />
+                            <input type="tel" pattern="[0-9]{10}" max={"10"} id='ph' name='ph' placeholder='Enter 10 digit number' />
                         </div>
 
                     </section>
@@ -164,7 +219,9 @@ const Form = () => {
 
                     <div className="formBtns">
                         <span onClick={handleCloseForm}>Cancel</span>
-                        <button type='submit' className='save'>Save</button>
+                       
+                        <button  type='submit' className='save'>Save</button>
+                    
 
                     </div>
                 </form>

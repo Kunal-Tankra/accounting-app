@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from './Navbar'
-import Karigar from './Karigar'
-import Bullion from "./Bullion"
-import Customer from "./Customer"
-import Supplier from "./Supplier"
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import Form from '../form/Form'
+import AllContexts from '../../contextAPI/Context'
+import MainPage from './MainPage'
 
 const Home = () => {
+  // context
+  const  {usersData} = useContext(AllContexts)
+
+  // navigate
   const navigate = useNavigate()
+
   useEffect(() => {
     // navigate to karigar initially
     navigate("karigar", { replace: true })
@@ -21,11 +24,11 @@ const Home = () => {
       <Navbar />
       <Routes>
 
-        <Route index element={<Karigar />} />
-        <Route exact path='karigar' element={<Karigar />} />
-        <Route exact path='bullion' element={<Bullion />} />
-        <Route exact path='customer' element={<Customer />} />
-        <Route exact path='supplier' element={<Supplier />} />
+        {/* <Route index element={<MainPage />} /> */}
+        <Route exact path='karigar' element={<MainPage users={usersData.filter((user=>user.party === "Karigar"))} />} />
+        <Route exact path='bullion' element={<MainPage users={usersData.filter((user=>user.party === "Bullion"))} />} />
+        <Route exact path='customer' element={<MainPage users={usersData.filter((user=>user.party === "Customer"))} />} />
+        <Route exact path='supplier' element={<MainPage users={usersData.filter((user=>user.party === "Supplier"))} />} />
       </Routes>
 
     </>
