@@ -18,7 +18,7 @@ const Form = () => {
     // handle remove tag
     const handleRemoveTag = () => {
         setSelectedTag(null)
-        formRef.current.party.value = "-"
+        formRef.current.party.value = "-"   
     }
 
     // handle submit the form
@@ -41,6 +41,7 @@ const Form = () => {
         form.name.value = ""
         form.party.value = "-"
         form.ph.value = ""
+        setSelectedTag(null)
         
         setdisplayForm(false)
         setId(id+1)
@@ -57,6 +58,7 @@ const Form = () => {
         form.name.value = ""
         form.party.value = "-"
         form.ph.value = ""
+        setSelectedTag(null)
         setdisplayForm(false)
 
         // set again null
@@ -104,6 +106,7 @@ const Form = () => {
          form.name.value = ""
          form.party.value = "-"
          form.ph.value = ""
+         setSelectedTag(null)
          
          setdisplayForm(false)
 

@@ -1,15 +1,30 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './MainPage.css'
 import TableRow from './TableRow'
 import AllContexts from '../../contextAPI/Context'
 
 const MainPage = (props) => {
     // props
-    const { users } = props
-
+    const { users, party } = props
 
     // context
     const { setdisplayForm } = useContext(AllContexts)
+
+    // state for searchedData
+    const [SearchedData, setSearchedData] = useState(users);
+
+    // state for search user
+    const [searchInput, setSearchInput] = useState("");
+
+    // handle search
+    const handleSearch = ()=>{
+        setSearchedData(users.filter(user=>user.name.toLowerCase().includes(searchInput.toLowerCase())))
+    }
+
+    useEffect(() => {
+        setSearchedData(users)
+    }, [users]);
+
 
     return (
         <div className='mainPageContainer'>
@@ -73,8 +88,9 @@ const MainPage = (props) => {
 
             {/* search container */}
             <div className="searchBoxContainer marginLeft_for_mainContainer">
-                <input type="text" placeholder='Search Karigar' />
-                <button>Search</button>
+                <input type="text" onChange={(e)=>setSearchInput(e.target.value)} value={searchInput} placeholder={`Search ${party}`} />
+                <button onClick={handleSearch} >Search</button>
+                {searchInput.length >0 && <button onClick={()=>{setSearchInput(""); setSearchedData(users)}} >Clear</button>}
             </div>
 
             {/* table */}
@@ -92,7 +108,7 @@ const MainPage = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, idx) => <TableRow key={user.id} user={user} id={user.id} name={user.name} ph={user.ph} idx={idx+1} />)}
+                        {SearchedData.map((user, idx) => <TableRow key={user.id} user={user} id={user.id} name={user.name} ph={user.ph} idx={idx+1} />)}
 
                     </tbody>
                 </table>

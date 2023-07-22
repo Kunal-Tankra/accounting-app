@@ -129,12 +129,16 @@
     background: #FFF;
     padding: 5px 21px;
 
-    color: #BBB;
-    font-size: 24px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     margin-right: 24px;
+}
+
+.searchBoxContainer input::placeholder{
+    color: #BBB;
+
 }
 
 .searchBoxContainer button {
@@ -144,6 +148,7 @@
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
     padding: 7px 15px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .searchBoxContainer button:active{

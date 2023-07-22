@@ -25,10 +25,10 @@ const Home = () => {
       <Routes>
 
         {/* <Route index element={<MainPage />} /> */}
-        <Route exact path='karigar' element={<MainPage users={usersData.filter((user=>user.party === "Karigar"))} />} />
-        <Route exact path='bullion' element={<MainPage users={usersData.filter((user=>user.party === "Bullion"))} />} />
-        <Route exact path='customer' element={<MainPage users={usersData.filter((user=>user.party === "Customer"))} />} />
-        <Route exact path='supplier' element={<MainPage users={usersData.filter((user=>user.party === "Supplier"))} />} />
+        <Route exact path='karigar' element={<MainPage party={"Karigar"} users={usersData.filter((user=>user.party === "Karigar"))} />} />
+        <Route exact path='bullion' element={<MainPage party={"Bullion"} users={usersData.filter((user=>user.party === "Bullion"))} />} />
+        <Route exact path='customer' element={<MainPage party={"Customer"} users={usersData.filter((user=>user.party === "Customer"))} />} />
+        <Route exact path='supplier' element={<MainPage party={"Supplier"} users={usersData.filter((user=>user.party === "Supplier"))} />} />
       </Routes>
 
     </>
