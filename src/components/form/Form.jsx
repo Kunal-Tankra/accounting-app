@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import "./Form.css"
+import AllContexts from '../../contextAPI/Context'
 
 const Form = () => {
+    // context
+    const { displayForm, setdisplayForm } = useContext(AllContexts)
+
+    // state for selected value
+    const [selectedTag, setSelectedTag] = useState(null);
+
+    // ref for form
+    const formRef = useRef()
+
+// handle remove tag
+const handleRemoveTag = ()=>{
+    setSelectedTag(null)
+    formRef.current.party.value = "-"
+}
+
     return (
-        <div className='formBg'>
+        <div style={{ display: displayForm ? "flex" : "none" }} className='formBg'>
             <div className="partyForm">
                 {/* close icon */}
-                <svg className='closeBtn' xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
-                    <g clip-path="url(#clip0_1_274)">
+                <svg onClick={() => setdisplayForm(false)} className='closeBtn' xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                    <g clipPath="url(#clip0_1_274)">
                         <path d="M4.24846 24.7515C2.86356 23.4139 1.75892 21.8139 0.998986 20.0449C0.239055 18.2758 -0.160945 16.3731 -0.177675 14.4478C-0.194406 12.5225 0.172469 10.6132 0.901542 8.83115C1.63061 7.04916 2.70728 5.4302 4.06873 4.06876C5.43017 2.70732 7.04913 1.63065 8.83112 0.901573C10.6131 0.1725 12.5225 -0.194375 14.4478 -0.177645C16.3731 -0.160914 18.2758 0.239086 20.0448 0.999017C21.8139 1.75895 23.4139 2.86359 24.7515 4.24849C27.3927 6.98322 28.8543 10.646 28.8212 14.4478C28.7882 18.2497 27.2632 21.8864 24.5748 24.5749C21.8864 27.2633 18.2496 28.7882 14.4478 28.8213C10.6459 28.8543 6.98319 27.3928 4.24846 24.7515ZM16.53 14.5L20.6335 10.3965L18.589 8.35199L14.5 12.4555L10.3965 8.35199L8.35196 10.3965L12.4555 14.5L8.35196 18.6035L10.3965 20.648L14.5 16.5445L18.6035 20.648L20.648 18.6035L16.5445 14.5H16.53Z" fill="black" />
                     </g>
                     <defs>
@@ -26,27 +42,29 @@ const Form = () => {
                 </div>
 
                 {/* actual form */}
-                <form className="formcontainer">
+                <form ref={formRef} className="formcontainer">
                     <section>
                         <div>
 
                             <label htmlFor="partyGroups">Party Groups * </label>
                             <div className="parties">
-                                <select name="party" id="partyGroups" required>
+                                <select onChange={(e) => setSelectedTag(e.target.value)} name="party" id="partyGroups" required>
 
-                                    <option disabled selected hidden >Select Party Groups</option>
+                                    <option disabled selected hidden value="-" >Select Party Groups</option>
                                     <option value="Karigar">Karigar</option>
                                     <option value="Bullion">Bullion</option>
                                     <option value="Supplier">Supplier</option>
                                     <option value="Customer">Customer</option>
                                 </select>
 
-                                <div className="selectedTag">
-                                    Karigar
-                                    <svg className='removeBtn' xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
-                                        <path d="M9.5 1.1875C4.86875 1.1875 1.1875 4.86875 1.1875 9.5C1.1875 14.1313 4.86875 17.8125 9.5 17.8125C14.1313 17.8125 17.8125 14.1313 17.8125 9.5C17.8125 4.86875 14.1313 1.1875 9.5 1.1875ZM12.7063 13.6562L9.5 10.45L6.29375 13.6562L5.34375 12.7063L8.55 9.5L5.34375 6.29375L6.29375 5.34375L9.5 8.55L12.7063 5.34375L13.6562 6.29375L10.45 9.5L13.6562 12.7063L12.7063 13.6562Z" fill="#484848" />
-                                    </svg>
-                                </div>
+                                {selectedTag &&
+                                    <div className="selectedTag">
+                                        {selectedTag}
+                                        <svg onClick={handleRemoveTag} className='removeBtn' xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+                                            <path d="M9.5 1.1875C4.86875 1.1875 1.1875 4.86875 1.1875 9.5C1.1875 14.1313 4.86875 17.8125 9.5 17.8125C14.1313 17.8125 17.8125 14.1313 17.8125 9.5C17.8125 4.86875 14.1313 1.1875 9.5 1.1875ZM12.7063 13.6562L9.5 10.45L6.29375 13.6562L5.34375 12.7063L8.55 9.5L5.34375 6.29375L6.29375 5.34375L9.5 8.55L12.7063 5.34375L13.6562 6.29375L10.45 9.5L13.6562 12.7063L12.7063 13.6562Z" fill="#484848" />
+                                        </svg>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </section>
@@ -106,7 +124,7 @@ const Form = () => {
                     </section>
 
                     <div className="formBtns">
-                        <button>Cancel</button>
+                        <button onClick={() => setdisplayForm(false)}>Cancel</button>
                         <button className='save'>Save</button>
                     </div>
                 </form>

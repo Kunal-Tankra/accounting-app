@@ -17,15 +17,15 @@ const Home = () => {
 
   return (
     <>
-    <Form/>
+      <Form />
       <Navbar />
       <Routes>
 
-          <Route index element={<Karigar />} />
-          <Route exact path='karigar' element={<Karigar />} />
-          <Route exact path='bullion' element={<Bullion />} />
-          <Route exact path='customer' element={<Customer />} />
-          <Route exact path='supplier' element={<Supplier />} />
+        <Route index element={<Karigar />} />
+        <Route exact path='karigar' element={<Karigar />} />
+        <Route exact path='bullion' element={<Bullion />} />
+        <Route exact path='customer' element={<Customer />} />
+        <Route exact path='supplier' element={<Supplier />} />
       </Routes>
 
     </>

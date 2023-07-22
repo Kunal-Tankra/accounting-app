@@ -1,10 +1,13 @@
-import React, { createContext } from 'react'
+import React, { createContext, useState } from 'react'
 
 const AllContexts = createContext()
 const Context = ({children }) => {
+    // display form
+    const [displayForm, setdisplayForm] = useState(false);
+
     // value obj
     const contextsObj = {
-        name: "kunal"
+        displayForm, setdisplayForm
     }
 
     return (
