@@ -160,6 +160,7 @@
     background: #F9F9F9;
     min-height: 692px;
     padding-top: 24px;
+    position: relative;
 }
 
 .tableContainer>table {

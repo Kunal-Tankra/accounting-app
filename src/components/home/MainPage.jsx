@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './MainPage.css'
 import TableRow from './TableRow'
 import AllContexts from '../../contextAPI/Context'
+import Export from './Export'
 
 const MainPage = (props) => {
     // props
@@ -95,6 +96,7 @@ const MainPage = (props) => {
 
             {/* table */}
             <div className="tableContainer">
+                <Export/>
                 <table className='marginLeft_for_mainContainer'>
                     <thead>
                         <tr>
