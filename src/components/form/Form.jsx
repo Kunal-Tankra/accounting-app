@@ -73,7 +73,7 @@ const Form = () => {
             form.party.value = currEditUser.party
             form.ph.value = currEditUser.ph
 
-            
+            setSelectedTag(form.party.value)
 
         }
 
