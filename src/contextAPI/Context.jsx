@@ -5,9 +5,13 @@ const Context = ({children }) => {
     // display form
     const [displayForm, setdisplayForm] = useState(false);
 
+    // users data
+    const [usersData, setUsersData] = useState([]);
+
     // value obj
     const contextsObj = {
-        displayForm, setdisplayForm
+        displayForm, setdisplayForm,
+        usersData, setUsersData
     }
 
     return (

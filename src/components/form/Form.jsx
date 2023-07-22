@@ -4,25 +4,64 @@ import AllContexts from '../../contextAPI/Context'
 
 const Form = () => {
     // context
-    const { displayForm, setdisplayForm } = useContext(AllContexts)
+    const { displayForm, setdisplayForm , usersData, setUsersData} = useContext(AllContexts)
 
     // state for selected value
     const [selectedTag, setSelectedTag] = useState(null);
 
+    // id state for user
+    const [id, setId] = useState(0);
+
     // ref for form
     const formRef = useRef()
 
-// handle remove tag
-const handleRemoveTag = ()=>{
-    setSelectedTag(null)
-    formRef.current.party.value = "-"
-}
+    // handle remove tag
+    const handleRemoveTag = () => {
+        setSelectedTag(null)
+        formRef.current.party.value = "-"
+    }
+
+    // handle submit the form
+    const handleSubmitForm = (e) => {
+        e.preventDefault()
+        const form = formRef.current
+        const name = form.name.value
+        const party = form.party.value
+
+
+        const userObj = {
+            id,
+            name,
+            party
+        }
+
+        // reset the form
+        form.name.value = ""
+        form.party.value = "-"
+
+        setdisplayForm(false)
+        setId(id+1)
+
+        // set the user data in all users data array
+        setUsersData([...usersData, userObj])
+        
+    }
+
+    console.log("all users", usersData)
+
+    // handle close the form
+    const handleCloseForm = () => {
+        const form = formRef.current
+        form.name.value = ""
+        form.party.value = "-"
+        setdisplayForm(false)
+    }
 
     return (
         <div style={{ display: displayForm ? "flex" : "none" }} className='formBg'>
             <div className="partyForm">
                 {/* close icon */}
-                <svg onClick={() => setdisplayForm(false)} className='closeBtn' xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
+                <svg onClick={handleCloseForm} className='closeBtn' xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29" fill="none">
                     <g clipPath="url(#clip0_1_274)">
                         <path d="M4.24846 24.7515C2.86356 23.4139 1.75892 21.8139 0.998986 20.0449C0.239055 18.2758 -0.160945 16.3731 -0.177675 14.4478C-0.194406 12.5225 0.172469 10.6132 0.901542 8.83115C1.63061 7.04916 2.70728 5.4302 4.06873 4.06876C5.43017 2.70732 7.04913 1.63065 8.83112 0.901573C10.6131 0.1725 12.5225 -0.194375 14.4478 -0.177645C16.3731 -0.160914 18.2758 0.239086 20.0448 0.999017C21.8139 1.75895 23.4139 2.86359 24.7515 4.24849C27.3927 6.98322 28.8543 10.646 28.8212 14.4478C28.7882 18.2497 27.2632 21.8864 24.5748 24.5749C21.8864 27.2633 18.2496 28.7882 14.4478 28.8213C10.6459 28.8543 6.98319 27.3928 4.24846 24.7515ZM16.53 14.5L20.6335 10.3965L18.589 8.35199L14.5 12.4555L10.3965 8.35199L8.35196 10.3965L12.4555 14.5L8.35196 18.6035L10.3965 20.648L14.5 16.5445L18.6035 20.648L20.648 18.6035L16.5445 14.5H16.53Z" fill="black" />
                     </g>
@@ -42,15 +81,15 @@ const handleRemoveTag = ()=>{
                 </div>
 
                 {/* actual form */}
-                <form ref={formRef} className="formcontainer">
+                <form onSubmit={handleSubmitForm} ref={formRef} className="formcontainer">
                     <section>
                         <div>
 
                             <label htmlFor="partyGroups">Party Groups * </label>
                             <div className="parties">
-                                <select onChange={(e) => setSelectedTag(e.target.value)} name="party" id="partyGroups" required>
+                                <select defaultValue={"-"} onChange={(e) => setSelectedTag(e.target.value)} name="party" id="partyGroups" required>
 
-                                    <option disabled selected hidden value="-" >Select Party Groups</option>
+                                    <option disabled hidden value="-" >Select Party Groups</option>
                                     <option value="Karigar">Karigar</option>
                                     <option value="Bullion">Bullion</option>
                                     <option value="Supplier">Supplier</option>
@@ -124,8 +163,9 @@ const handleRemoveTag = ()=>{
                     </section>
 
                     <div className="formBtns">
-                        <button onClick={() => setdisplayForm(false)}>Cancel</button>
-                        <button className='save'>Save</button>
+                        <span onClick={handleCloseForm}>Cancel</span>
+                        <button type='submit' className='save'>Save</button>
+
                     </div>
                 </form>
             </div>
